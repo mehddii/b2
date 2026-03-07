@@ -66,7 +66,7 @@ func TestDelete(t *testing.T) {
 			s.Delete(test.Key)
 			_, err := s.Get(test.Key)
 
-			if err != nil {
+			if err == nil {
 				t.Errorf("Got nil; wanted error")
 			}
 		})
