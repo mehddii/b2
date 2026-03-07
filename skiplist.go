@@ -48,7 +48,7 @@ func (s *SkipMap[K, V]) Get(key K) (V, error) {
 	}
 
 	current = current.Forward[0]
-	if current.Key != key {
+	if current == nil || current.Key != key {
 		return *new(V), fmt.Errorf("Key %v does not exist", key)
 
 	}
@@ -128,7 +128,7 @@ func (s *SkipMap[K, V]) Delete(key K) {
 			update[i].Forward[i] = current.Forward[i]
 		}
 
-		for s.Level > 0 && s.Header.Forward[s.Level-1] == nil {
+		for s.Level > 1 && s.Header.Forward[s.Level-1] == nil {
 			s.Level--
 			s.Header.Forward = s.Header.Forward[:s.Level]
 		}
