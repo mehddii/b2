@@ -3,11 +3,15 @@ MAIN_PACKAGE_PATH = .
 
 .PHONY: run
 run: build
-	/tmp/bin/$(BIN_NAME)
+	@/tmp/bin/$(BIN_NAME)
 
 .PHONY: build
 build: clean tidy fmt vet
 	@go build -v -o /tmp/bin/$(BIN_NAME) $(MAIN_PACKAGE_PATH)
+
+.PHONY: test
+test:
+	@go test -race $(MAIN_PACKAGE_PATH)
 
 .PHONY: clean
 clean:
@@ -15,6 +19,7 @@ clean:
 		&& go clean ./...
 
 .PHONY: tidy
+tidy:
 	@go mod tidy
 
 .PHONY: fmt
